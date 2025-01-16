@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dtbbwecmwitql"]
+
+[ext_resource type="Script" path="res://scripts/card_slot.gd" id="1_pohol"]
+[ext_resource type="Texture2D" uid="uid://bi12eavr8ydbn" path="res://assets/cards/Warrior.png" id="2_auhx6"]
+
+[node name="CardSlot" type="Node2D"]
+position = Vector2(428, 132)
+scale = Vector2(0.7, 0.7)
+script = ExtResource("1_pohol")
+
+[node name="CardSlotImage" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 0.32549)
+texture = ExtResource("2_auhx6")
