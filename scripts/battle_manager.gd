@@ -22,6 +22,10 @@ var empty_card_slots = []
 @onready var opponents_ult: TextureButton = $"../CanvasLayer/Characters/OpponentsUlt"
 @onready var round_label: Label = $"../CanvasLayer/UI/RoundLabel"
 
+@onready var end_turn_button: Button = $"../EndTurnButton"
+
+var player_empty_slots = []
+
 
 var opponent_cards_on_battlefield = []
 var player_cards_on_battlefied = []
@@ -39,6 +43,7 @@ var opponent_mana = 2
 var opponent_ult_cost = 10
 
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	battle_timer.one_shot = true
@@ -50,6 +55,13 @@ func _ready() -> void:
 	empty_card_slots.append($"../CardSlots/EnemyCardSlot4")
 	empty_card_slots.append($"../CardSlots/EnemyCardSlot5")
 	empty_card_slots.append($"../CardSlots/EnemyCardSlot6")
+	
+	player_empty_slots.append($"../CardSlots/CardSlot")
+	player_empty_slots.append($"../CardSlots/CardSlot2")
+	player_empty_slots.append($"../CardSlots/CardSlot3")
+	player_empty_slots.append($"../CardSlots/CardSlot4")
+	player_empty_slots.append($"../CardSlots/CardSlot5")
+	player_empty_slots.append($"../CardSlots/CardSlot6")
 
 
 func _process(delta: float) -> void:
@@ -85,8 +97,9 @@ func _process(delta: float) -> void:
 		players_ult.disabled = false
 	
 	round_label.text = str(round)
-
-
+	
+	
+	
 
 func _on_end_turn_button_pressed() -> void:
 	num_of_player_card_draw = player_hand.player_hand.size()
@@ -94,19 +107,29 @@ func _on_end_turn_button_pressed() -> void:
 	draw_opponent_cards()
 	opponent_turn()
 	
-	# Если последний раунд то запустить битву карт между собой 
-	if round == 3:
-		card_fight()
+
 
 
 func opponent_turn():
-	$"../EndTurnButton".disabled = true
-	$"../EndTurnButton".visible = false
-	print(number_of_opponent_cards())
-
+	end_turn_button.disabled = true
+	end_turn_button.visible = false
+	var cards_to_play = ["Mage", "Warrior", "Ranger", "Tank", "Spy"]
 	# Check if there is any empty card slots are availabe, if not - end turn
 	if empty_card_slots.size() != 0:
-		await try_play_mage_card()
+		for i in number_of_opponent_cards():
+			var card_to_play = cards_to_play.pick_random()
+			match card_to_play:
+				"Mage":
+					await try_play_mage_card()
+				"Warrior":
+					await try_to_play_warrior_card()
+				"Ranger":
+					await try_to_play_ranger_card()
+				"Tank":
+					await try_to_play_tank_card()
+				"Spy":
+					await try_to_play_spy_card()
+
 	
 	# Wait 1 second
 	await wait(1.0)
@@ -116,12 +139,20 @@ func opponent_turn():
 		if opponent_cards_on_battlefield.size() != 0:
 			var enemy_cards_to_attack = opponent_cards_on_battlefield.duplicate()
 			for card in enemy_cards_to_attack:
-				if player_cards_on_battlefied.size() == 0:
-					direct_attack(card, "Opponent")
-				else:
-					attack()
-	
-	end_opponent_turn()
+				if player_cards_on_battlefied.size() != 0:
+					attack(card, "Opponent")
+					enemy_cards_to_attack.erase(card)
+			await wait(3.0)
+			for card in enemy_cards_to_attack:
+				direct_attack(card, "Opponent")
+			
+			
+			#var player_cards_to_attack = player_cards_on_battlefied.duplicate()
+			#for card in player_cards_to_attack:
+				#direct_attack(card, "Opponent")
+	#
+	if round != 3:
+		end_opponent_turn()
 
 
 func try_play_mage_card():
@@ -132,7 +163,6 @@ func try_play_mage_card():
 	# Get random empty card slot
 	var random_empty_card_slots = empty_card_slots[randi_range(0, empty_card_slots.size()) -1]
 	empty_card_slots.erase(random_empty_card_slots)
-	#print(empty_card_slots)
 	
 	# Play mage card
 	var mage_card_mana_steal = opp_hand[0]
@@ -140,7 +170,7 @@ func try_play_mage_card():
 	for card in opp_hand:
 		if card.mana_steal == 1:
 			mage_card_mana_steal = card
-		elif card.mana_steal == 1 and card.mana_gain == 1:
+		if card.mana_steal == 1 and card.mana_gain == 1:
 			golden_mage_card = card
 	
 	if golden_mage_card != null:
@@ -172,7 +202,6 @@ func try_to_play_warrior_card():
 	# Get random empty card slot
 	var random_empty_card_slots = empty_card_slots[randi_range(0, empty_card_slots.size()) -1]
 	empty_card_slots.erase(random_empty_card_slots)
-	#print(empty_card_slots)
 	
 	# Play mage card
 	var mage_card_mana_steal = opp_hand[0]
@@ -212,7 +241,6 @@ func try_to_play_ranger_card():
 	# Get random empty card slot
 	var random_empty_card_slots = empty_card_slots[randi_range(0, empty_card_slots.size()) -1]
 	empty_card_slots.erase(random_empty_card_slots)
-	#print(empty_card_slots)
 	
 	# Play mage card
 	var mage_card_mana_steal = opp_hand[0]
@@ -252,7 +280,6 @@ func try_to_play_tank_card():
 	# Get random empty card slot
 	var random_empty_card_slots = empty_card_slots[randi_range(0, empty_card_slots.size()) -1]
 	empty_card_slots.erase(random_empty_card_slots)
-	#print(empty_card_slots)
 	
 	# Play mage card
 	var mage_card_mana_steal = opp_hand[0]
@@ -292,7 +319,6 @@ func try_to_play_spy_card():
 	# Get random empty card slot
 	var random_empty_card_slots = empty_card_slots[randi_range(0, empty_card_slots.size()) -1]
 	empty_card_slots.erase(random_empty_card_slots)
-	#print(empty_card_slots)
 	
 	# Play mage card
 	var mage_card_mana_steal = opp_hand[0]
@@ -328,12 +354,13 @@ func end_opponent_turn():
 	round += 1
 	if round > 3:
 		round = 1
-	$"../EndTurnButton".disabled = false
-	$"../EndTurnButton".visible = true
 	
 	num_of_opponent_card_draw = opponent_hand.opponent_hand.size()
 	erase_opponent_hand()
 	draw_players_cards()
+	end_turn_button.disabled = false
+	end_turn_button.visible = true
+	
 
 
 func erase_players_hand():
@@ -356,6 +383,7 @@ func draw_players_cards():
 	for i in range(num_of_player_card_draw):
 		deck.draw_card()
 	num_of_player_card_draw = 0
+	
 
 func draw_opponent_cards():
 	for i in range(num_of_opponent_card_draw):
@@ -389,15 +417,8 @@ func _on_players_ult_pressed() -> void:
 
 
 func direct_attack(attacking_card, attacker):
-	#var new_pos_y 
-	#if attacker == "Opponent":
-		#new_pos_y = players_ult.position.y
-	#else:
-		#new_pos_y = opponents_ult.position.y
-	
 	attacking_card.z_index = 5
 	
-	#var new_pos = Vector2(attacking_card.position.x, new_pos_y)
 	var new_pos : Vector2
 	
 	if attacker == "Opponent":
@@ -421,9 +442,46 @@ func direct_attack(attacking_card, attacker):
 	await wait(1.0)
 	
 	attacking_card.z_index = 0
+	round = 0
+	end_opponent_turn()
+	erase_opponent_card_slots()
+	erase_players_hand()
+	erase_player_card_slots()
+	for i in range(deck.STARTING_HAND_SIZE):
+		deck.draw_card()
 
-func attack():
-	print("attack")
+
+func attack(attacking_card, attacker):
+	attacking_card.z_index = 5
+	var new_pos : Vector2
+	var enemy_cards
+	print(opponent_cards_on_battlefield)
+	print(player_cards_on_battlefied)
+	
+	if attacker == "Opponent":
+		enemy_cards = player_cards_on_battlefied
+	else:
+		enemy_cards = opponent_cards_on_battlefield
+	
+	for i in enemy_cards.size():
+		if (attacking_card.type == "Warrior" and player_cards_on_battlefied[i].type == "Tank") or (attacking_card.type == "Tank" and player_cards_on_battlefied[i].type == "Warrior"):
+			attacking_card.queue_free()
+			player_cards_on_battlefied[i].queue_free()
+		elif (attacking_card.type == "Ranger" and player_cards_on_battlefied[i].type == "Spy") or (attacking_card.type == "Spy" and player_cards_on_battlefied[i].type == "Ranger"):
+			attacking_card.queue_free()
+			player_cards_on_battlefied[i].queue_free()
+	
+	
+	
+	await wait(1.0)
+	if attacking_card != null:
+		attacking_card.z_index = 0
+	#end_opponent_turn()
+	#erase_opponent_card_slots()
+	#erase_players_hand()
+	#erase_player_card_slots()
+	#for i in range(deck.STARTING_HAND_SIZE):
+		#deck.draw_card()
 
 
 func wait(wait_time):
@@ -436,10 +494,47 @@ func wait(wait_time):
 func number_of_opponent_cards():
 	var number_of_cards : int
 	# from 1 to 4 cards
-	if round != 3:
-		number_of_cards = randi_range(1, 4)
+	if round == 1:
+		number_of_cards = randi_range(1, 3)
+		print(number_of_cards)
+	elif round == 2:
+		number_of_cards = randi_range(1, 3)
+		print(number_of_cards)
 	else:
 		number_of_cards = 6 - opponent_cards_on_battlefield.size()
 	return number_of_cards
 
 	
+func erase_opponent_card_slots():
+	var all_cards = card_manager.get_children()
+	for i in all_cards.size():
+		if all_cards[i] in opponent_cards_on_battlefield:
+			all_cards[i].queue_free()
+	opponent_cards_on_battlefield = []
+	num_of_opponent_card_draw = 6
+	empty_card_slots = []
+	empty_card_slots.append($"../CardSlots/EnemyCardSlot1")
+	empty_card_slots.append($"../CardSlots/EnemyCardSlot2")
+	empty_card_slots.append($"../CardSlots/EnemyCardSlot3")
+	empty_card_slots.append($"../CardSlots/EnemyCardSlot4")
+	empty_card_slots.append($"../CardSlots/EnemyCardSlot5")
+	empty_card_slots.append($"../CardSlots/EnemyCardSlot6")
+
+func erase_player_card_slots():
+	var all_cards = card_manager.get_children()
+	for i in all_cards.size():
+		if all_cards[i] in player_cards_on_battlefied:
+			all_cards[i].queue_free()
+	var cards_in_slots = $"../CardSlots".get_children()
+	for i in cards_in_slots.size():
+		if cards_in_slots[i] in player_empty_slots:
+			cards_in_slots[i].card_in_slot = false
+	player_cards_on_battlefied = []
+	num_of_player_card_draw = 6
+	player_empty_slots = []
+	player_empty_slots.append($"../CardSlots/CardSlot")
+	player_empty_slots.append($"../CardSlots/CardSlot2")
+	player_empty_slots.append($"../CardSlots/CardSlot3")
+	player_empty_slots.append($"../CardSlots/CardSlot4")
+	player_empty_slots.append($"../CardSlots/CardSlot5")
+	player_empty_slots.append($"../CardSlots/CardSlot6")

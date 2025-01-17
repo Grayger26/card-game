@@ -1,4 +1,4 @@
-const CARDS = { # Attack, Health, Mana steal, Mana gain, Type
+const CARDS = { # Attack, Health, Mana steal, Mana gain, Type, Battle Type
 	"Warrior" : [1, 1, 0, 0, "Warrior"],
 	"Ranger" : [1, 1, 0, 0, "Ranger"],
 	"Mage" : [0, 0, 1, 0, "Mage"],
@@ -10,3 +10,6 @@ const CARDS = { # Attack, Health, Mana steal, Mana gain, Type
 	"Golden Spy" : [1, 1, 0, 1, "Spy"],
 	"Golden Tank" : [1, 1, 0, 1, "Tank"],
 }
+
+
+# 

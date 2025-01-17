@@ -1638,21 +1638,27 @@ position = Vector2(839, 441)
 scale = Vector2(0.7, 0.7)
 
 [node name="EnemyCardSlot1" parent="CardSlots" instance=ExtResource("2_erdly")]
+modulate = Color(1, 1, 1, 0)
 position = Vector2(440, 279)
 
 [node name="EnemyCardSlot2" parent="CardSlots" instance=ExtResource("2_erdly")]
+modulate = Color(1, 1, 1, 0)
 position = Vector2(520, 279)
 
 [node name="EnemyCardSlot3" parent="CardSlots" instance=ExtResource("2_erdly")]
+modulate = Color(1, 1, 1, 0)
 position = Vector2(600, 279)
 
 [node name="EnemyCardSlot4" parent="CardSlots" instance=ExtResource("2_erdly")]
+modulate = Color(1, 1, 1, 0)
 position = Vector2(680, 279)
 
 [node name="EnemyCardSlot5" parent="CardSlots" instance=ExtResource("2_erdly")]
+modulate = Color(1, 1, 1, 0)
 position = Vector2(760, 279)
 
 [node name="EnemyCardSlot6" parent="CardSlots" instance=ExtResource("2_erdly")]
+modulate = Color(1, 1, 1, 0)
 position = Vector2(840, 279)
 
 [node name="CardManager" type="Node2D" parent="."]

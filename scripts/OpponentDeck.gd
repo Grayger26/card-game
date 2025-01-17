@@ -60,9 +60,10 @@ func draw_card():
 	new_card.get_node("Health").text = str(card_database_reference.CARDS[card_drawn_name][1])
 	new_card.mana_steal = card_database_reference.CARDS[card_drawn_name][2]
 	new_card.type = card_database_reference.CARDS[card_drawn_name][4]
+	new_card.mana_gain = card_database_reference.CARDS[card_drawn_name][3]
 	new_card.get_node("ManaSteal").text = str(new_card.mana_steal)
 	new_card.get_node("ManaGain").text = str(card_database_reference.CARDS[card_drawn_name][3])
 	$"../CardManager".add_child(new_card)
 	new_card.name = "Card"
 	$"../OpponentHand".add_card_to_hand(new_card, CARD_DRAW_SPEED)
-	#new_card.get_node("AnimationPlayer").play("card_flip")
+	new_card.get_node("AnimationPlayer").play("card_flip")
