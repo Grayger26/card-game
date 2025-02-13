@@ -10,6 +10,7 @@ var mana_steal
 var attack
 var mana_gain
 var type
+var can_damage
 
 
 # Called when the node enters the scene tree for the first time.

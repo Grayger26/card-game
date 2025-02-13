@@ -1,14 +1,14 @@
-const CARDS = { # Attack, Health, Mana steal, Mana gain, Type, Battle Type
-	"Warrior" : [1, 1, 0, 0, "Warrior"],
-	"Ranger" : [1, 1, 0, 0, "Ranger"],
-	"Mage" : [0, 0, 1, 0, "Mage"],
-	"Spy" : [1, 1, 0, 0, "Spy"],
-	"Tank" : [1, 1, 0, 0, "Tank"],
-	"Golden Warrior" : [1, 1, 0, 1, "Warrior"],
-	"Golden Ranger" : [1, 1, 0, 1, "Ranger"],
-	"Golden Mage" : [0, 0, 1, 1, "Mage"],
-	"Golden Spy" : [1, 1, 0, 1, "Spy"],
-	"Golden Tank" : [1, 1, 0, 1, "Tank"],
+const CARDS = { # Attack, Health, Mana steal, Mana gain, Type, Can damage
+	"Warrior" : [1, 1, 0, 0, "Warrior", true],
+	"Ranger" : [1, 1, 0, 0, "Ranger", true],
+	"Mage" : [0, 0, 1, 0, "Mage", false],
+	"Spy" : [1, 1, 0, 0, "Spy", false],
+	"Tank" : [1, 1, 0, 0, "Tank", false],
+	"Golden Warrior" : [1, 1, 0, 1, "Warrior", true],
+	"Golden Ranger" : [1, 1, 0, 1, "Ranger", true],
+	"Golden Mage" : [0, 0, 1, 1, "Mage", false],
+	"Golden Spy" : [1, 1, 0, 1, "Spy", false],
+	"Golden Tank" : [1, 1, 0, 1, "Tank", false],
 }
 
 

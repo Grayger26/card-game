@@ -1,0 +1,69 @@
+[gd_scene load_steps=5 format=3 uid="uid://cjt41qnfnr733"]
+
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_bqabp"]
+[ext_resource type="PackedScene" uid="uid://cbk6dv3y14eca" path="res://other/tile_map_layer.tscn" id="2_qh8i3"]
+[ext_resource type="FontFile" uid="uid://c7wj8wca2x0lc" path="res://assets/fonts/PressStart2P.ttf" id="2_tpo2q"]
+[ext_resource type="PackedScene" uid="uid://dgmfvdt16s3oq" path="res://ui/crt.tscn" id="3_jpc8l"]
+
+[node name="Main Menu" type="Node2D"]
+script = ExtResource("1_bqabp")
+
+[node name="TileMapLayer" parent="." instance=ExtResource("2_qh8i3")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ButtonContainer" type="VBoxContainer" parent="CanvasLayer/UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -184.0
+offset_top = -137.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+
+[node name="SP" type="Button" parent="CanvasLayer/UI/ButtonContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_tpo2q")
+text = "Start
+"
+
+[node name="MP" type="Button" parent="CanvasLayer/UI/ButtonContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_tpo2q")
+disabled = true
+text = "Multiplayer"
+
+[node name="Options" type="Button" parent="CanvasLayer/UI/ButtonContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_tpo2q")
+text = "Options
+"
+
+[node name="Credit" type="Button" parent="CanvasLayer/UI/ButtonContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_tpo2q")
+text = "Credits"
+
+[node name="Quit" type="Button" parent="CanvasLayer/UI/ButtonContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_tpo2q")
+text = "Quit"
+
+[node name="CRT" parent="CanvasLayer" instance=ExtResource("3_jpc8l")]
+
+[connection signal="pressed" from="CanvasLayer/UI/ButtonContainer/SP" to="." method="_on_sp_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/ButtonContainer/Credit" to="." method="_on_credit_pressed"]
+[connection signal="pressed" from="CanvasLayer/UI/ButtonContainer/Quit" to="." method="_on_quit_pressed"]

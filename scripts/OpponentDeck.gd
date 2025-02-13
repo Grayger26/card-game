@@ -60,6 +60,7 @@ func draw_card():
 	new_card.get_node("Health").text = str(card_database_reference.CARDS[card_drawn_name][1])
 	new_card.mana_steal = card_database_reference.CARDS[card_drawn_name][2]
 	new_card.type = card_database_reference.CARDS[card_drawn_name][4]
+	new_card.can_damage = card_database_reference.CARDS[card_drawn_name][5]
 	new_card.mana_gain = card_database_reference.CARDS[card_drawn_name][3]
 	new_card.get_node("ManaSteal").text = str(new_card.mana_steal)
 	new_card.get_node("ManaGain").text = str(card_database_reference.CARDS[card_drawn_name][3])

@@ -1,0 +1,113 @@
+[gd_scene load_steps=6 format=3 uid="uid://b7xlx7ifyfp2h"]
+
+[ext_resource type="Script" path="res://scripts/credits.gd" id="1_nv812"]
+[ext_resource type="PackedScene" uid="uid://cbk6dv3y14eca" path="res://other/tile_map_layer.tscn" id="1_qi87q"]
+[ext_resource type="FontFile" uid="uid://c7wj8wca2x0lc" path="res://assets/fonts/PressStart2P.ttf" id="2_ugvxt"]
+[ext_resource type="PackedScene" uid="uid://dgmfvdt16s3oq" path="res://ui/crt.tscn" id="3_hgbuh"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_qfly5"]
+font = ExtResource("2_ugvxt")
+
+[node name="Credits" type="Node2D"]
+script = ExtResource("1_nv812")
+
+[node name="TileMapLayer" parent="." instance=ExtResource("1_qi87q")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+offset_left = 439.0
+offset_top = 212.0
+offset_right = 843.0
+offset_bottom = 504.0
+
+[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer"]
+modulate = Color(0, 0.803922, 0.768627, 1)
+layout_mode = 2
+text = "Cards and background:"
+label_settings = SubResource("LabelSettings_qfly5")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Label2" type="Label" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ugvxt")
+theme_override_font_sizes/font_size = 12
+text = "https://cafedraw.itch.io/fantasy-card-assets"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Label3" type="Label" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ugvxt")
+theme_override_font_sizes/font_size = 10
+
+[node name="Label4" type="Label" parent="CanvasLayer/VBoxContainer"]
+modulate = Color(0, 0.803667, 0.769062, 1)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ugvxt")
+text = "Card characters:"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Label5" type="Label" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ugvxt")
+theme_override_font_sizes/font_size = 10
+text = "https://sethbb.itch.io/32rogues"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Label6" type="Label" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ugvxt")
+theme_override_font_sizes/font_size = 10
+
+[node name="Label7" type="Label" parent="CanvasLayer/VBoxContainer"]
+modulate = Color(0, 0.803922, 0.768627, 1)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ugvxt")
+text = "UI:"
+horizontal_alignment = 1
+
+[node name="Label8" type="Label" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ugvxt")
+theme_override_font_sizes/font_size = 10
+text = "https://byandrox.itch.io/crimson-fantasy-gui"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Label9" type="Label" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ugvxt")
+theme_override_font_sizes/font_size = 10
+horizontal_alignment = 1
+
+[node name="Label10" type="Label" parent="CanvasLayer/VBoxContainer"]
+modulate = Color(0, 0.803922, 0.768627, 1)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ugvxt")
+text = "SFX:"
+horizontal_alignment = 1
+
+[node name="Back" type="Button" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -72.0
+offset_top = -150.0
+offset_bottom = -126.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(2, 2)
+theme_override_fonts/font = ExtResource("2_ugvxt")
+text = "Back"
+
+[node name="CRT" parent="CanvasLayer" instance=ExtResource("3_hgbuh")]
+metadata/_edit_lock_ = true
+
+[connection signal="pressed" from="CanvasLayer/Back" to="." method="_on_back_pressed"]

@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://dgmfvdt16s3oq"]
+
+[ext_resource type="Shader" path="res://shaders/crt.gdshader" id="1_pg763"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sd8nh"]
+shader = ExtResource("1_pg763")
+shader_parameter/resolution = Vector2(1920, 1080)
+shader_parameter/scan_line_amount = 1.0
+shader_parameter/warp_amount = 0.05
+shader_parameter/noise_amount = 0.03
+shader_parameter/interference_amount = 0.2
+shader_parameter/grille_amount = 0.1
+shader_parameter/grille_size = 1.0
+shader_parameter/vignette_amount = 0.6
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/aberation_amount = 0.5
+shader_parameter/roll_line_amount = 0.025
+shader_parameter/roll_speed = 0.3
+shader_parameter/scan_line_strength = -8.0
+shader_parameter/pixel_strength = -2.0
+
+[node name="CRT" type="ColorRect"]
+material = SubResource("ShaderMaterial_sd8nh")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)

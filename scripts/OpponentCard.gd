@@ -9,3 +9,4 @@ var mana_steal
 var attack
 var mana_gain
 var type
+var can_damage

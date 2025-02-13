@@ -1,8 +1,9 @@
-[gd_scene load_steps=24 format=4 uid="uid://b8svd3f3q8jk3"]
+[gd_scene load_steps=25 format=4 uid="uid://b8svd3f3q8jk3"]
 
 [ext_resource type="PackedScene" uid="uid://bwm3rkpqjniyn" path="res://cards/card_slot.tscn" id="1_4ngwf"]
 [ext_resource type="Script" path="res://scripts/card_manager.gd" id="1_apbhu"]
 [ext_resource type="Texture2D" uid="uid://cue638u77m8yv" path="res://assets/pixelCardAssest_V01.png" id="1_gqhuj"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_le5ix"]
 [ext_resource type="PackedScene" uid="uid://dtbbwecmwitql" path="res://cards/Enemy_card_slot.tscn" id="2_erdly"]
 [ext_resource type="Script" path="res://scripts/deck.gd" id="4_cpv6m"]
 [ext_resource type="Texture2D" uid="uid://xrjf7atbjik3" path="res://assets/cards/cardBacks.png" id="4_x12kh"]
@@ -11,12 +12,13 @@
 [ext_resource type="Script" path="res://scripts/input_manager.gd" id="6_o14bx"]
 [ext_resource type="Script" path="res://scripts/battle_manager.gd" id="8_6u5pc"]
 [ext_resource type="Script" path="res://scripts/OpponentDeck.gd" id="9_lpd0m"]
-[ext_resource type="Shader" path="res://shaders/crt.gdshader" id="12_0spgo"]
+[ext_resource type="FontFile" uid="uid://c7wj8wca2x0lc" path="res://assets/fonts/PressStart2P.ttf" id="12_rcd42"]
 [ext_resource type="Texture2D" uid="uid://bqkeih6xabnqk" path="res://assets/characters/knight_disabled.png" id="13_fu1tv"]
 [ext_resource type="Texture2D" uid="uid://r5en6d5845ij" path="res://assets/ui/HP_2.png" id="13_h2e5l"]
 [ext_resource type="Texture2D" uid="uid://riqcscr7ga57" path="res://assets/ui/MANA_2.png" id="13_lt5n7"]
 [ext_resource type="Texture2D" uid="uid://dupausxme2iby" path="res://assets/characters/knight_normal.png" id="15_4d5p1"]
 [ext_resource type="Texture2D" uid="uid://cnywbpvpuo5ql" path="res://assets/characters/mage_normal.png" id="17_3mv22"]
+[ext_resource type="PackedScene" uid="uid://dgmfvdt16s3oq" path="res://ui/crt.tscn" id="18_gx6rn"]
 [ext_resource type="Texture2D" uid="uid://cu3o5bulfnq0j" path="res://assets/ui/Note.png" id="18_in3dm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vomyd"]
@@ -1584,24 +1586,8 @@ size = Vector2(96, 128)
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_h06ak"]
 load_path = "res://.godot/imported/knight_pressed.png-0afaa5dc749e84595d9d76a5f9c5d1e9.ctex"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_sd8nh"]
-shader = ExtResource("12_0spgo")
-shader_parameter/resolution = Vector2(1920, 1080)
-shader_parameter/scan_line_amount = 1.0
-shader_parameter/warp_amount = 0.05
-shader_parameter/noise_amount = 0.03
-shader_parameter/interference_amount = 0.2
-shader_parameter/grille_amount = 0.1
-shader_parameter/grille_size = 1.0
-shader_parameter/vignette_amount = 0.6
-shader_parameter/vignette_intensity = 0.4
-shader_parameter/aberation_amount = 0.5
-shader_parameter/roll_line_amount = 0.025
-shader_parameter/roll_speed = 0.3
-shader_parameter/scan_line_strength = -8.0
-shader_parameter/pixel_strength = -2.0
-
 [node name="Main" type="Node2D"]
+script = ExtResource("1_le5ix")
 
 [node name="Environment" type="Node2D" parent="."]
 z_index = -10
@@ -1791,15 +1777,55 @@ offset_right = 653.0
 offset_bottom = 371.0
 text = "ROUND 1"
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-material = SubResource("ShaderMaterial_sd8nh")
+[node name="Menu" type="Control" parent="CanvasLayer"]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-color = Color(1, 1, 1, 0)
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.415686, 0.415686, 0.415686, 0.615686)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Menu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -163.0
+offset_top = -44.0
+offset_right = -11.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+
+[node name="Continue" type="Button" parent="CanvasLayer/Menu/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("12_rcd42")
+text = "Continue"
+
+[node name="Restart" type="Button" parent="CanvasLayer/Menu/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("12_rcd42")
+text = "Restart"
+
+[node name="Main Menu" type="Button" parent="CanvasLayer/Menu/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("12_rcd42")
+text = "Main Menu"
+
+[node name="CRT" parent="CanvasLayer" instance=ExtResource("18_gx6rn")]
+metadata/_edit_lock_ = true
 
 [node name="Line2D" type="Line2D" parent="."]
 position = Vector2(0, 360)
@@ -1813,3 +1839,6 @@ default_color = Color(0.2, 0.207843, 0.227451, 1)
 [connection signal="pressed" from="CanvasLayer/Characters/PlayersUlt" to="BattleManager" method="_on_players_ult_pressed"]
 [connection signal="mouse_entered" from="CanvasLayer/Characters/OpponentsUlt" to="BattleManager" method="_on_opponents_ult_mouse_entered"]
 [connection signal="mouse_exited" from="CanvasLayer/Characters/OpponentsUlt" to="BattleManager" method="_on_opponents_ult_mouse_exited"]
+[connection signal="pressed" from="CanvasLayer/Menu/VBoxContainer/Continue" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="CanvasLayer/Menu/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="CanvasLayer/Menu/VBoxContainer/Main Menu" to="." method="_on_main_menu_pressed"]
